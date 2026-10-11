@@ -6,17 +6,22 @@ wordlist = [
     "security"
 ]
 
+# Randomly select a word and create the hidden game board
 word = wordlist[random.randint(0, len(wordlist) - 1)]
 board = list("_" * len(word))
+
+# Track incorrect guesses and set the maximum number allowed
 bad_guesses = []
 max_wrong = 6
 
+# Main game loop - continues until the player wins or reaches 6 wrong guesses
 while len(bad_guesses) < max_wrong and "_" in board:
     print()
 
     print("Welcome to HANGMAN!")
     print()
 
+    # Display the Hangman drawing based on the number of wrong guesses
     match len(bad_guesses):
         case 0:
             print("")
@@ -71,15 +76,16 @@ while len(bad_guesses) < max_wrong and "_" in board:
 =======
 """.strip())
 
+    # Display the current game board and incorrect guesses
     print()
     print(board)
     print()
     print("Bad Guesses:", bad_guesses)
     print()
 
+    # Ask the player to guess one letter
     guess = input("Guess a letter: ").lower()
 
-    # Validate Input
     if len(guess) != 1 or not guess.isalpha():
         print("\n⚠️ Please enter one letter.")
         input("Press [enter] to continue.")
@@ -97,6 +103,7 @@ while len(bad_guesses) < max_wrong and "_" in board:
             board[i] = word[i]
             is_found = True
 
+    # Tell the player whether the guess was correct or incorrect
     if is_found:
         print(f"\n✅ '{guess}' is in the word!")
     else:
@@ -105,9 +112,12 @@ while len(bad_guesses) < max_wrong and "_" in board:
 
     input("Press [enter] to continue.")
 
+# Check whether the player won or lost
 if "_" not in board:
     print(f"\n🎉 YOU WON! The word was '{word}'")
 else:
+
+    # Display the completed Hangman after a loss
     print("""
 +---+
 |   |
@@ -119,4 +129,5 @@ else:
 
     print(f"\n💀 YOU LOST! The word was '{word}'")
 
+# End the program
 print("\nThank you for playing!")
